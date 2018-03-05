@@ -1,5 +1,6 @@
 package fxp.com.androidandjs;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,8 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
+    private Context context;
 
     private Toolbar toolbar;
 
@@ -19,6 +25,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle toggle;
 
     private NavigationView navigationView;
+
+    private WebView webView;
+
+    private EditText editText;
+
+    private TextView commitBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initDatas() {
+        context = getApplicationContext();
 
     }
 
@@ -42,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        webView = (WebView) findViewById(R.id.webview);
+        editText = (EditText) findViewById(R.id.edit_text);
+        commitBtn = (TextView) findViewById(R.id.commit_btn);
     }
 
     private void initViews() {
@@ -53,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initListeners() {
         navigationView.setNavigationItemSelectedListener(this);
-
+        commitBtn.setOnClickListener(this);
     }
 
     private void initNavigationView() {
@@ -66,7 +82,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.commit_btn:
 
+                break;
+            default:
+                break;
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
