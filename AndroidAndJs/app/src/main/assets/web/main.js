@@ -13,8 +13,14 @@ var main = function(){
         }
     }
 
+    var inputAndroidDataToWebView = (str) =>{
+        document.getElementById("android_input_txt").value = str;
+        alert(str);
+    }
+
     return{
-        init: init
+        init: init,
+        inputData:inputAndroidDataToWebView
     }
 }();
 

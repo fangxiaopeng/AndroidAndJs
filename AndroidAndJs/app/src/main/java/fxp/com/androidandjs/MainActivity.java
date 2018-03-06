@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
+    private String TAG = "MainActivity";
 
     private Context context;
 
@@ -97,11 +100,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.commit_btn:
-
+                inputAndroidDataToWebView();
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 将Android输入框内容填写到WebView中html
+     * Android调用Js
+     */
+    private void inputAndroidDataToWebView() {
+        String str = editText.getText().toString();
+        Log.i(TAG, "inputAndroidDataToWebView-" + str);
+        webView.loadUrl("javascript:main.inputData(" + str + ")");
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
