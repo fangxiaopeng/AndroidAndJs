@@ -1,6 +1,7 @@
 package fxp.com.androidandjs;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -8,9 +9,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
@@ -108,13 +109,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
-     * 将Android输入框内容填写到WebView中html
-     * Android调用Js
+     * Android调用Js-将Android输入框内容填写到WebView中html
+     * 使用evaluateJavascript()和 loadUrl()两种方式实现
+     * evaluateJavascript()方式-效率高，可直接获取JS返回值，但只支持Android4.4以上
+     * loadUrl()方式-方便简洁，但效率低，获取js返回值麻烦，适用于不需要获取JS返回值或对性能要求较低的场景
      */
     private void inputAndroidDataToWebView() {
         String str = editText.getText().toString();
-        Log.i(TAG, "inputAndroidDataToWebView-" + str);
-        webView.loadUrl("javascript:main.inputData(" + str + ")");
+        // 判断系统版本是否高于或等于4.4
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // evaluateJavascript()方式
+            webView.evaluateJavascript("javascript:main.inputData(" + str + ")", new ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(String s) {
+                    // js返回结果处理
+
+                }
+            });
+        } else {
+            // loadUrl()方式
+            webView.loadUrl("javascript:main.inputData(" + str + ")");
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
