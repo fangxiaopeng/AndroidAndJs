@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -65,11 +66,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         initNavigationView();
+
+        initWebView();
     }
 
     private void initListeners() {
         navigationView.setNavigationItemSelectedListener(this);
         commitBtn.setOnClickListener(this);
+    }
+
+    private void initWebView() {
+        WebSettings webSettings = webView.getSettings();
+        // 允许JS自动打开窗口
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        // 开启javascript支持
+        webSettings.setJavaScriptEnabled(true);
+        // 从assets目录下面的加载html
+        webView.loadUrl("file:///android_asset/web/index.html");
     }
 
     private void initNavigationView() {
