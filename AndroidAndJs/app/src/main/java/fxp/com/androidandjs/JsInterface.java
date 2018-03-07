@@ -21,6 +21,8 @@ public class JsInterface {
 
     private Context context;
 
+    private CameraListener cameraListener = null;
+
     public JsInterface(Context context) {
         this.context = context;
     }
@@ -50,6 +52,10 @@ public class JsInterface {
         }
     }
 
+    public void setCameraListener(CameraListener listener) {
+        this.cameraListener = listener;
+    }
+
     private void showToast(String str) {
         Log.i(TAG, "showToast-" + str);
         Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
@@ -57,6 +63,6 @@ public class JsInterface {
 
     private void takePicture() {
         Log.i(TAG, "takePicture");
-
+        cameraListener.takePicture();
     }
 }
