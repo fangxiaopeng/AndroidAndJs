@@ -12,9 +12,10 @@ import org.json.JSONObject;
  * Js调用Android（桥梁类）
  * 方式：通过WebView的addJavascriptInterface（）进行对象映射
  * 优点：使用简单，将Android对象和JS对象映射即可
- * 缺点：存在严重的漏洞问题，漏洞参考https://www.jianshu.com/p/3a345d27cd42
+ * 缺点：Android 4.2下存在严重的漏洞问题，漏洞参考https://www.jianshu.com/p/3a345d27cd42
  * Created by fxp on 2018/3/7.
  */
+
 public class JsInterface {
 
     private String TAG = "JsInterface";
