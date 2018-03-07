@@ -5,9 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,12 +24,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private FxpWebViewClient fxpWebViewClient;
 
+    private FxpWebChromeClient fxpWebChromeClient;
+
     public static final String IMAGE_PATH = "fxpFiles";
 
     /* 相机请求码 */
@@ -89,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         context = getApplicationContext();
         jsInterface = new JsInterface(MainActivity.this);
         fxpWebViewClient = new FxpWebViewClient(MainActivity.this);
+        fxpWebChromeClient = new FxpWebChromeClient(MainActivity.this);
     }
 
     private void findViews() {
@@ -127,6 +125,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         webView.addJavascriptInterface(jsInterface, "fxp");
         // Js调用Android方式二：通过 WebViewClient 的方法shouldOverrideUrlLoading()回调拦截url
         webView.setWebViewClient(fxpWebViewClient);
+        // Js调用Android方式三：过 WebChromeClient 的onJsAlert()、onJsConfirm()、onJsPrompt（）方法回调拦截JS对话框alert()、confirm()、prompt（）消息
+        webView.setWebChromeClient(fxpWebChromeClient);
     }
 
     private void initNavigationView() {
