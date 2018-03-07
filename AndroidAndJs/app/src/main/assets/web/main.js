@@ -29,10 +29,10 @@ var main = function(){
         console.log("bindEvent-" + method);
         if(method == "on"){
             showToastBtn.addEventListener("click", showToast, false);
-            TakePicBtn.addEventListener("click", TakePicture, false);
+            TakePicBtn.addEventListener("click", takePicture, false);
         }else if(method == "off"){
             showToastBtn.removeEventListener("click", showToast, false);
-            TakePicBtn.removeEventListener("click", TakePicture, false);
+            TakePicBtn.removeEventListener("click", takePicture, false);
         }else{
 
         }
@@ -57,9 +57,17 @@ var main = function(){
         }
     }
 
-    var TakePicture = () =>{
-        console.log("TakePicture");
-
+    var takePicture = () =>{
+        console.log("takePicture");
+        try {
+            let json = {
+                "action":"takePicture",
+                "params":""
+            }
+            window.fxp.invokeAndroid(JSON.stringify(json));
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return{

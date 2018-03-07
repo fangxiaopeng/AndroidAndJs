@@ -42,6 +42,9 @@ public class JsInterface {
             case "showToast":
                 showToast(params);
                 break;
+            case "takePicture":
+                takePicture();
+                break;
             default:
                 break;
         }
@@ -50,5 +53,10 @@ public class JsInterface {
     private void showToast(String str) {
         Log.i(TAG, "showToast-" + str);
         Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
+    }
+
+    private void takePicture() {
+        Log.i(TAG, "takePicture");
+
     }
 }
