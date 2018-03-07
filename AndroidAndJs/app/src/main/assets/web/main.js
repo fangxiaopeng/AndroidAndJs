@@ -45,7 +45,12 @@ var main = function(){
 
     var showToast = () =>{
         console.log("showToast");
-
+        try {
+            // window.映射字符串.java方法名
+            window.fxp.showToast(androidInput.value);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     var TakePicture = () =>{

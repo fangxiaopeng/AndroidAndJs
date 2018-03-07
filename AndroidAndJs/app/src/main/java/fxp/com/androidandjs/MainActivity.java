@@ -9,13 +9,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -87,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         webSettings.setJavaScriptEnabled(true);
         // 从assets目录下面的加载html
         webView.loadUrl("file:///android_asset/web/index.html");
+        webView.addJavascriptInterface(MainActivity.this, "fxp");
     }
 
     private void initNavigationView() {
@@ -130,6 +134,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // loadUrl()方式
             webView.loadUrl("javascript:main.inputData(" + str + ")");
         }
+    }
+
+    /**
+     * Js调用Android
+     * 由于安全原因 targetSdkVersion>=17需要加 @JavascriptInterface
+     *
+     * @param str
+     */
+    @JavascriptInterface
+    public void showToast(String str) {
+        Log.i(TAG, "showToast-" + str);
+        Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
