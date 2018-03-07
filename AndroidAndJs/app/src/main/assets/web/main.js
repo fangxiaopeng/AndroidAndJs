@@ -45,6 +45,10 @@ var main = function(){
 
     var showToast = () =>{
         console.log("showToast");
+
+        // 约定的url协议为：js://webview?action=showToast&params=""
+        document.location = "js://webview?action=showToast&params=" + androidInput.value;
+
         try {
             let json = {
                 "action":"showToast",

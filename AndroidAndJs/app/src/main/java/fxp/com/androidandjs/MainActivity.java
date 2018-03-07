@@ -5,7 +5,9 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,9 +26,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private JsInterface jsInterface;
 
+    private FxpWebViewClient fxpWebViewClient;
+
     public static final String IMAGE_PATH = "fxpFiles";
 
     /* 相机请求码 */
@@ -81,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initDatas() {
         context = getApplicationContext();
         jsInterface = new JsInterface(MainActivity.this);
+        fxpWebViewClient = new FxpWebViewClient(MainActivity.this);
     }
 
     private void findViews() {
@@ -117,6 +125,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         webView.loadUrl("file:///android_asset/web/index.html");
         // Js调用Android方式一：通过WebView的addJavascriptInterface（）进行对象映射
         webView.addJavascriptInterface(jsInterface, "fxp");
+        // Js调用Android方式二：通过 WebViewClient 的方法shouldOverrideUrlLoading()回调拦截url
+        webView.setWebViewClient(fxpWebViewClient);
     }
 
     private void initNavigationView() {
