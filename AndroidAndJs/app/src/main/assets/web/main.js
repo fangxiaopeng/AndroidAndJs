@@ -46,9 +46,7 @@ var main = function(){
     var showToast = () =>{
         console.log("showToast");
 
-        // 约定的url协议为：js://webview?action=showToast&params=""
-        document.location = "js://webview?action=showToast&params=" + androidInput.value;
-
+        // Js调用Android方式一：通过WebView的addJavascriptInterface（）进行对象映射
         try {
             let json = {
                 "action":"showToast",
@@ -59,6 +57,15 @@ var main = function(){
         } catch (error) {
             console.log(error);
         }
+
+        // 约定协议为：js://webview?action=showToast&params=""
+
+        // Js调用Android方式二：通过 WebViewClient 的方法shouldOverrideUrlLoading ()回调拦截 url
+        document.location = "js://webview?action=showToast&params=" + androidInput.value;
+
+        // Js调用Android方式三：通过 WebChromeClient 的onJsAlert()、onJsConfirm()、onJsPrompt（）方法回调拦截JS对话框alert()、confirm()、prompt（）消息 调用prompt（）
+        var result = prompt("js://webview?action=showToast&params=" + androidInput.value);
+        console.log("调用prompt（）结果-" + result);
     }
 
     var takePicture = () =>{
