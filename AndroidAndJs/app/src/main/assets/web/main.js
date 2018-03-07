@@ -46,8 +46,12 @@ var main = function(){
     var showToast = () =>{
         console.log("showToast");
         try {
+            let json = {
+                "action":"showToast",
+                "params":androidInput.value
+            }
             // window.映射字符串.java方法名
-            window.fxp.showToast(androidInput.value);
+            window.fxp.invokeAndroid(JSON.stringify(json));
         } catch (error) {
             console.log(error);
         }
